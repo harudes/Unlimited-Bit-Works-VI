@@ -9,18 +9,26 @@
 using namespace std;
 
 //Crear quad tree
-
-
+QuadTree qt(-300,300,-300,300,3);
+vector<Line> lines;
+vector<Point> points;
 //dibuja un simple gizmo
 void displayGizmo()
 {
-	glBegin(GL_LINES);
-	glColor3d(255,0,0);
-	glVertex2d(0, 0);
-	glVertex2d(300, 0);
-	glColor3d(0, 255, 0);
-	glVertex2d(0, 0);
-	glVertex2d(0, 300);
+	/*glBegin(GL_LINES);
+	lines=qt.getLines();
+	for(unsigned int i=0;i<lines.size();++i){
+        glColor3d(255,255,255);
+        glVertex2d(lines[i].u.getX(), lines[i].u.getY());
+        glVertex2d(lines[i].v.getX(), lines[i].v.getY());
+	}
+	glEnd();*/
+	glBegin(GL_POINTS);
+	glPointSize(5.20);
+	for(unsigned int i=0;i<points.size();++i){
+        glColor3d(0,0,0);
+        glVertex2d(points[i].getX(), points[i].getY());
+	}
 	glEnd();
 }
 
@@ -30,6 +38,12 @@ void OnMouseClick(int button, int state, int x, int y)
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
   {
     //convertir x,y
+    x-=300;
+    y-=300;
+    y*=-1;
+    Point p(x,y);
+    qt.insertPoint(p);
+    points.push_back(p);
 	//insertar un nuevo punto en el quadtree
   }
 }
@@ -68,7 +82,7 @@ void glPaint(void) {
 //
 void init_GL(void) {
 	//Color del fondo de la escena
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //(R, G, B, transparencia) en este caso un fondo negro
+	glClearColor(0.180f, 0.193f, 0.227f, 0.0f); //(R, G, B, transparencia) en este caso un fondo negro
 
 	//modo projeccion
 	glMatrixMode(GL_PROJECTION);
@@ -117,9 +131,7 @@ int main(int argc, char** argv) {
 	glutMotionFunc(&OnMouseMotion);
 	glutIdleFunc(&idle);
 
-
-	//qt = new quadTree();
-	///glutMainLoop(); //bucle de rendering
+	glutMainLoop(); //bucle de rendering
 	//no escribir nada abajo de mainloop
 	return 0;
 }
