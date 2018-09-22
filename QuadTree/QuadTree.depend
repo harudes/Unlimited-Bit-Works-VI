@@ -1,20 +1,22 @@
 # depslib dependency file v1.0
-1537599814 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
+1537635405 source:c:\users\alumno-g\desktop\quadtree\src\quadtree.cpp
 	<iostream>
 	"QuadTree.h"
 
-1537599814 c:\users\luis\desktop\quadtree\include\quadtree.h
+1537635411 c:\users\alumno-g\desktop\quadtree\include\quadtree.h
 	<vector>
 	<math.h>
 
-1537601026 source:c:\users\luis\desktop\quadtree\main.cpp
+1537638835 source:c:\users\alumno-g\desktop\quadtree\main.cpp
 	<windows.h>
 	<iostream>
 	<math.h>
 	<GL/glut.h>
+	<stdlib.h>
+	<time.h>
 	<QuadTree.h>
 
-976692172 c:\users\luis\downloads\quadtree\glut\include\gl\glut.h
+976692172 c:\users\alumno-g\downloads\quadtree\glut\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
