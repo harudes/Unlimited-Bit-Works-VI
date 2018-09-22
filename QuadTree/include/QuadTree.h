@@ -1,6 +1,7 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 #include <vector>
+#include <math.h>
 typedef float coordenada;
 
 using namespace std;
@@ -14,6 +15,10 @@ public:
 	coordenada getY();
 	int region(coordenada xMid, coordenada yMid);
 };
+
+float euclidian(float a, float b);
+
+float euclidean(Point a, Point b);
 
 struct Line{
     Line(Point a, Point b);
@@ -32,6 +37,12 @@ public:
 	void split();
 	void insertPoint(Point p);
 	void insertPoint(coordenada x, coordenada y);
+	Point leftup();
+	Point rightup();
+	Point leftdown();
+	Point rightdown();
+	bool inRegion(Point punto, float distancia);
+	vector<Point> cercanos(coordenada x, coordenada y, float radio);
 	vector<Line> getLines();
 	~QuadTree();
 };

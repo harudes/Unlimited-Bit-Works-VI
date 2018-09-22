@@ -6,6 +6,14 @@ ostream& operator<<(ostream& os, Point p){
 	return os;
 }
 
+float euclidian(float a, float b) {
+	return sqrt(pow(a, 2) + pow(b, 2));
+}
+
+float euclidean(Point a, Point b) {
+	return sqrt((pow(a.getX() - b.getX(), 2)) + (pow(a.getY() - b.getY(), 2)));
+}
+
 Point::Point(coordenada a, coordenada b):x(a),y(b){
 
 }
@@ -69,6 +77,50 @@ void QuadTree::insertPoint(Point p){
         regions[p.region(midX,midY)]->insertPoint(p);
     }
 }
+
+Point QuadTree::leftup() {
+    return Point(minX,maxY);
+}
+Point QuadTree::rightup() {
+    return Point(maxX, maxY);
+}
+Point QuadTree::leftdown() {
+    return Point(minX, minY);
+}
+Point QuadTree::rightdown() {
+    return Point(minX, minY);
+}
+
+bool QuadTree::inRegion(Point punto, float distancia) {
+    bool c1 = punto.getX() >= minX && punto.getX() <= maxX && punto.getY() >= minY && punto.getY() <= maxY;
+    if (!c1) {
+        c1 = (punto.getX()<minX && punto.getX()+distancia>minX) || (punto.getX() > maxX && punto.getX() - distancia < maxX) || (punto.getY() < minY && punto.getY() + distancia > minY) || (punto.getY() > maxY && punto.getY() - distancia < maxY);
+        bool c2 = euclidean(punto, leftup()) <= distancia || euclidean(punto, leftdown()) <= distancia || euclidean(punto, rightup()) <= distancia || euclidean(punto, rightdown()) <= distancia;
+        c1 = c1 || c2;
+    }
+    return c1;
+}
+
+vector<Point> QuadTree::cercanos(coordenada x, coordenada y, float radio) {
+		Point centro(x, y);
+		vector<Point> puntos;
+		if (inRegion(centro, radio)) {
+			if (!regions[0]) {
+				for (size_t i = 0; i < points.size(); ++i) {
+					if (euclidean(points[i], centro) <= radio)
+						puntos.push_back(points[i]);
+				}
+			}
+			else {
+				vector<Point> aux;
+				for (int i = 0; i < 4; ++i) {
+					aux = regions[i]->cercanos(x, y, radio);
+					puntos.insert(puntos.end(),aux.begin(),aux.end());
+				}
+			}
+		}
+		return puntos;
+	}
 
 vector<Line> QuadTree::getLines(){
     vector<Line> lines;

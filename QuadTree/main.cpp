@@ -2,49 +2,95 @@
 #include <windows.h>
 #include <iostream>
 #include <math.h>
-#include<GL/glut.h>
+#include <GL/glut.h>
 #include <QuadTree.h>
 #define KEY_ESC 27
+#define PI 3.14159
+#define radio 50
 
 using namespace std;
 
+
+
 //Crear quad tree
-QuadTree qt(-300,300,-300,300,3);
+QuadTree qt(-300,300,-300,300,1);
 vector<Line> lines;
 vector<Point> points;
+vector<Point> nearby;
+bool cercanos=0;
+int circleX, circleY;
 //dibuja un simple gizmo
-void displayGizmo()
-{
-	/*glBegin(GL_LINES);
+
+void graficar_circulo(int x, int y){
+    glBegin(GL_POINTS);
+     for (int i = 0; i < 1000 + 1; i++) {  // +1 para cerrar
+         glVertex2f( x + radio * cos(2.0 * PI * i / 1000),
+                y + radio * sin(2.0 * PI * i / 1000) );
+    }
+    glEnd();
+}
+
+void pintar_lineas(){
+    glBegin(GL_LINES);
 	lines=qt.getLines();
 	for(unsigned int i=0;i<lines.size();++i){
         glColor3d(255,255,255);
         glVertex2d(lines[i].u.getX(), lines[i].u.getY());
         glVertex2d(lines[i].v.getX(), lines[i].v.getY());
 	}
-	glEnd();*/
-	glBegin(GL_POINTS);
-	glPointSize(5.20);
+	glEnd();
+}
+
+void pintar_puntos(){
+    glBegin(GL_POINTS);
 	for(unsigned int i=0;i<points.size();++i){
         glColor3d(0,0,0);
         glVertex2d(points[i].getX(), points[i].getY());
 	}
 	glEnd();
+	glPointSize(5.0f);
+}
+
+void resaltar_puntos(){
+    glBegin(GL_POINTS);
+	for(unsigned int i=0;i<nearby.size();++i){
+        glColor3d(255,255,255);
+        glVertex2d(nearby[i].getX(), nearby[i].getY());
+	}
+	glEnd();
+	glPointSize(5.0f);
+}
+
+void displayGizmo()
+{
+	pintar_lineas();
+	pintar_puntos();
+	if(cercanos){
+        resaltar_puntos();
+        graficar_circulo(circleX, circleY);
+    }
 }
 
 
 void OnMouseClick(int button, int state, int x, int y)
 {
-  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-  {
-    //convertir x,y
     x-=300;
     y-=300;
     y*=-1;
+  if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+    //convertir x,y
     Point p(x,y);
     qt.insertPoint(p);
     points.push_back(p);
 	//insertar un nuevo punto en el quadtree
+  }
+  if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+    //float rad;
+    //cin>>rad;
+    nearby=qt.cercanos(x,y,radio);
+    circleX=x;
+    circleY=y;
+    cercanos=!cercanos;
   }
 }
 
