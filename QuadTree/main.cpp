@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <QuadTree.h>
+#include <fstream>
 #define KEY_ESC 27
 #define PI 3.14159
 #define radio 100
@@ -169,18 +170,25 @@ GLvoid window_key(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
 
 	//Inicializacion de la GLUT
+	ifstream coordenadas("C:/Users/Luis/Desktop/QuadTree/bin/Debug/Coordenadas2.txt");
 	glutInit(&argc, argv);
-	cout<<"Ingrese las dimensiones"<<endl<<endl;
-	cout<<"Ingrese el ancho de la ventana: ";
-	cin>>length;
-	cout<<"Ingrese el alto de la ventana: ";
-	cin>>heigth;
-	cout<<"Ingrese la cantidad maxima de puntos por sector: ";
-	cin>>maxp;
+	/*string aux;
+	getline(coordenadas,aux);
+	cout<<aux<<endl;*/
+	//cout<<"Ingrese las dimensiones"<<endl<<endl;
+	//cout<<"Ingrese el ancho de la ventana: ";
+	coordenadas>>length;
+	//cout<<"Ingrese el alto de la ventana: ";
+	coordenadas>>heigth;
+	//cout<<"Ingrese la cantidad maxima de puntos por sector: ";
+	coordenadas>>maxp;
+	int pointnum;
+	coordenadas>>pointnum;
+	coordenada a,b;
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(length, heigth); //tamaño de la ventana
-	glutInitWindowPosition(100, 100); //posicion de la ventana
+	glutInitWindowPosition(0, 0); //posicion de la ventana
 	glutCreateWindow("TP2 bis OpenGL : Bresenham"); //titulo de la ventana
 
 	init_GL(); //funcion de inicializacion de OpenGL
@@ -193,8 +201,13 @@ int main(int argc, char** argv) {
 	glutPassiveMotionFunc(&OnMouseMotion);
 	glutIdleFunc(&idle);
     qt=new QuadTree(-length/2,length/2,-heigth/2,heigth/2,maxp);
-    for(int i=0;i<100000;++i){
-        Point aux(rand()%length-length/2,rand()%heigth-heigth/2);
+    for(int i=0;i<pointnum;++i){
+        coordenadas>>a>>b;
+        //cout<<a<<" "<<b<<" "<<i<<endl;
+        a*=heigth;
+        b*=length;
+        //cout<<a<<" "<<b<<endl;
+        Point aux(b,a);
         qt->insertPoint(aux);
         points.push_back(aux);
     }

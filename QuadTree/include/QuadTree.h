@@ -16,7 +16,9 @@ public:
 	int region(coordenada xMid, coordenada yMid);
 };
 
-float euclidian(float a, float b);
+bool findPoint(vector<Point> vec, Point p);
+
+float euclidean(float a, float b);
 
 float euclidean(Point a, Point b);
 
@@ -35,6 +37,7 @@ public:
 	QuadTree(coordenada xMin, coordenada xMax, coordenada yMin, coordenada yMax, int maxP);
 	QuadTree(Point leftup, Point rightdown, int maxP);
 	void split();
+	bool searchPoint(Point p, QuadTree *&qt);
 	void insertPoint(Point p);
 	void insertPoint(coordenada x, coordenada y);
 	Point leftup();

@@ -6,7 +6,19 @@ ostream& operator<<(ostream& os, Point p){
 	return os;
 }
 
-float euclidian(float a, float b) {
+bool operator==(Point u, Point v){
+    return (u.getX()==v.getX())&&(u.getY()==v.getY());
+}
+
+bool findPoint(vector<Point> vec, Point p){
+    for(size_t i=0;i<vec.size();++i){
+        if(vec[i]==p)
+            return 1;
+    }
+    return 0;
+}
+
+float euclidean(float a, float b) {
 	return sqrt(pow(a, 2) + pow(b, 2));
 }
 
@@ -55,26 +67,31 @@ void QuadTree::split(){
     points.clear();
 }
 
-void QuadTree::insertPoint(coordenada x, coordenada y){
-    Point punto(x,y);
-    if(!regions[0]){
-        points.push_back(punto);
-        if(points.size()>maxPoints)
-            split();
-    }
+bool QuadTree::searchPoint(Point punto, QuadTree *&qt){
+    if(!regions[0])
+        return findPoint(points,punto);
     else{
-        regions[punto.region(midX,midY)]->insertPoint(punto);
+        qt=(regions[punto.region(midX,midY)]);
+        return regions[punto.region(midX,midY)]->searchPoint(punto,qt);
     }
 }
 
-void QuadTree::insertPoint(Point p){
-    if(!regions[0]){
-        points.push_back(p);
-        if(points.size()>maxPoints)
-            split();
+void QuadTree::insertPoint(coordenada x, coordenada y){
+    QuadTree* p=this;
+    Point punto(x,y);
+    if(!searchPoint(punto,p)){
+        p->points.push_back(punto);
+            if(p->points.size()>maxPoints)
+                split();
     }
-    else{
-        regions[p.region(midX,midY)]->insertPoint(p);
+}
+
+void QuadTree::insertPoint(Point punto){
+    QuadTree* p=this;
+    if(!searchPoint(punto,p)){
+        p->points.push_back(punto);
+            if(p->points.size()>maxPoints)
+                split();
     }
 }
 
