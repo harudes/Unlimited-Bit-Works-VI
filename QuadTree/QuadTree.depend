@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1537966175 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
+1538228539 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
 	<iostream>
 	"QuadTree.h"
 
-1537965983 c:\users\luis\desktop\quadtree\include\quadtree.h
+1538227989 c:\users\luis\desktop\quadtree\include\quadtree.h
 	<vector>
 	<math.h>
 
-1537965046 source:c:\users\luis\desktop\quadtree\main.cpp
+1538228611 source:c:\users\luis\desktop\quadtree\main.cpp
 	<windows.h>
 	<iostream>
 	<math.h>

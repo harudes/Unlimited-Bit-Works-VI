@@ -91,7 +91,7 @@ void QuadTree::insertPoint(Point punto){
     if(!searchPoint(punto,p)){
         p->points.push_back(punto);
             if(p->points.size()>maxPoints)
-                split();
+                p->split();
     }
 }
 
@@ -118,10 +118,34 @@ bool QuadTree::inRegion(Point punto, float distancia) {
     return c1;
 }
 
+vector<Point> QuadTree::getPoints(){
+    vector<Point> puntos;
+    if (!regions[0]) {
+        for (size_t i = 0; i < points.size(); ++i) {
+                puntos.push_back(points[i]);
+        }
+    }
+    else {
+        vector<Point> aux;
+        for (int i = 0; i < 4; ++i) {
+            aux = regions[i]->getPoints();
+            puntos.insert(puntos.end(),aux.begin(),aux.end());
+        }
+    }
+	return puntos;
+}
+
+bool QuadTree::onCircle(Point punto, float distancia){
+    return euclidean(punto, leftup()) <= distancia && euclidean(punto, leftdown()) <= distancia && euclidean(punto, rightup()) <= distancia && euclidean(punto, rightdown()) <= distancia;
+}
+
 vector<Point> QuadTree::cercanos(coordenada x, coordenada y, float radio) {
 		Point centro(x, y);
 		vector<Point> puntos;
-		if (inRegion(centro, radio)) {
+		if(onCircle(centro,radio)){
+            return getPoints();
+		}
+		else if (inRegion(centro, radio)) {
 			if (!regions[0]) {
 				for (size_t i = 0; i < points.size(); ++i) {
 					if (euclidean(points[i], centro) <= radio)

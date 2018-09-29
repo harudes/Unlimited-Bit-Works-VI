@@ -44,6 +44,8 @@ public:
 	Point rightup();
 	Point leftdown();
 	Point rightdown();
+	vector<Point> getPoints();
+	bool onCircle(Point punto, float distancia);
 	bool inRegion(Point punto, float distancia);
 	vector<Point> cercanos(coordenada x, coordenada y, float radio);
 	vector<Line> getLines();
