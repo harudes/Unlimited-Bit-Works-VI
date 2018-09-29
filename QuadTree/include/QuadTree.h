@@ -2,19 +2,10 @@
 #define QUADTREE_H
 #include <vector>
 #include <math.h>
-typedef float coordenada;
+#include <Point.h>
 
 using namespace std;
 
-class Point{
-	coordenada x;
-	coordenada y;
-public:
-	Point(coordenada a, coordenada b);
-	coordenada getX();
-	coordenada getY();
-	int region(coordenada xMid, coordenada yMid);
-};
 
 bool findPoint(vector<Point> vec, Point p);
 

@@ -1,14 +1,4 @@
-#include <iostream>
 #include "QuadTree.h"
-
-ostream& operator<<(ostream& os, Point p){
-	os << p.getX() << ',' << p.getY();
-	return os;
-}
-
-bool operator==(Point u, Point v){
-    return (u.getX()==v.getX())&&(u.getY()==v.getY());
-}
 
 bool findPoint(vector<Point> vec, Point p){
     for(size_t i=0;i<vec.size();++i){
@@ -24,22 +14,6 @@ float euclidean(float a, float b) {
 
 float euclidean(Point a, Point b) {
 	return sqrt((pow(a.getX() - b.getX(), 2)) + (pow(a.getY() - b.getY(), 2)));
-}
-
-Point::Point(coordenada a, coordenada b):x(a),y(b){
-
-}
-
-coordenada Point::getX(){return x;}
-coordenada Point::getY(){return y;}
-
-int Point::region(coordenada xMid, coordenada yMid){
-    int rpta=0;
-    if(x>xMid)
-        rpta|=1;
-    if(y<yMid)
-        rpta|=2;
-    return rpta;
 }
 
 Line::Line(Point a, Point b):u(a),v(b){}
