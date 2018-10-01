@@ -7,6 +7,8 @@
 
 using namespace std;
 
+int operaciones=0;
+
 template<typename T,typename S>
 ostream& operator<<(ostream &os, pair<T,S> p){
 	os<<"("<<p.first<<" "<<p.second<<")";
@@ -24,7 +26,7 @@ void printMatrix(vector<vector<T>> vec){
 	cout<<endl<<endl;
 }
 
-void BackTracking(vector<vector<pair<pair<int,int>,pair<int,int>>>> &backTracking,int n){
+/*void BackTracking(vector<vector<pair<pair<int,int>,pair<int,int>>>> &backTracking,int n){
 	queue<pair<int,int>> orden;
 	stack<pair<int,int>> aux;
 	orden.push(backTracking[1][n-1].first);
@@ -43,46 +45,53 @@ void BackTracking(vector<vector<pair<pair<int,int>,pair<int,int>>>> &backTrackin
 		cout<<aux.top()<<temp<<endl;
 		aux.pop();
 	}
+}*/
+
+void BackTracking(vector<vector<int>> s,int i,int j,char &c){
+	if(i==j)
+		cout<<c++;
+	else{
+		cout<<"(";
+		BackTracking(s,i,s[i][j],c);
+		BackTracking(s,s[i][j]+1,j,c);
+		cout<<")";
+	}
 }
 
 int MatrixChainOrder(vector<int> p) { 
 	int n=p.size();
 	vector<vector<int>> m(n);
-	queue<pair<int,int>> orden;
-	stack<pair<int,int>> aux;
+	char c='A';
 	for (int i = 0; i < n; ++i) {
 		m[i].assign(n,0);
 	}
-	vector<vector<pair<pair<int,int>,pair<int,int>>>> backTracking(n);
+	vector<vector<int>> s(n);
 	for (int i = 0; i < n; ++i) {
-		backTracking[i].assign(n,make_pair(make_pair(0,0),make_pair(0,0)));
+		s[i].assign(n,0);
 	}
-	int j, temp,auxI,auxJ,auxK;
+	int j, temp;
 	for (int L=2; L<n; ++L) { 
 		for (int i=1; i<n-L+1; ++i) { 
 			j = i+L-1; 
 			m[i][j] = INT_MAX; 
 			for (int k=i; k<=j-1; ++k) { 
 				temp = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j]; 
-				if (temp < m[i][j]){ 
+				if (temp < m[i][j]){
 					m[i][j] = temp;
-					auxI=i;
-					auxJ=j;
-					auxK=k;
+					s[i][j]=k;
 				}
 			}
-			backTracking[i][j]=make_pair(make_pair(auxI,auxK),make_pair(auxK+1,auxJ));
 		}
 	}
-	BackTracking(backTracking,n);
+	BackTracking(s,1,n-1,c);
 	cout<<endl;
 	return m[1][n-1];
 }
 
 int main() 
 { 
-	vector<int> arr= {1000,9,8,7,6,5,4,3,2,1}; 
-	cout<<"Minimum number of multiplications is: "<<MatrixChainOrder(arr)<<" "; 
+	vector<int> arr= {9,5,7,8,10}; 
+	cout<<"Numero minimo de operaciones: "<<MatrixChainOrder(arr)<<" "; 
 	return 0; 
 } 
 
