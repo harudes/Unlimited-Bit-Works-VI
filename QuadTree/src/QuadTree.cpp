@@ -1,4 +1,14 @@
+#include <iostream>
 #include "QuadTree.h"
+
+ostream& operator<<(ostream& os, Point p){
+	os << p.getX() << ',' << p.getY();
+	return os;
+}
+
+bool operator==(Point u, Point v){
+    return (u.getX()==v.getX())&&(u.getY()==v.getY());
+}
 
 bool findPoint(vector<Point> vec, Point p){
     for(size_t i=0;i<vec.size();++i){

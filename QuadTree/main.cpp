@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <QuadTree.h>
+#include <RTree.h>
 #include <fstream>
-#include <ctime>
 #define KEY_ESC 27
 #define PI 3.14159
 #define radio 100
@@ -40,7 +40,7 @@ void pintar_lineas(){
     glBegin(GL_LINES);
 	lines=qt->getLines();
 	for(unsigned int i=0;i<lines.size();++i){
-        glColor3f(0.0, 0.0, 0.0);
+        glColor3f(1.0, 1.0, 1.0);
         glVertex2d(lines[i].u.getX(), lines[i].u.getY());
         glVertex2d(lines[i].v.getX(), lines[i].v.getY());
 	}
@@ -55,7 +55,7 @@ void pintar_puntos(){
         glVertex2d(points[i].getX(), points[i].getY());
 	}
 	glEnd();
-	glPointSize(2.0f);
+	glPointSize(3.0f);
 }
 
 void resaltar_puntos(){
@@ -65,13 +65,13 @@ void resaltar_puntos(){
         glVertex2d(nearby[i].getX(), nearby[i].getY());
 	}
 	glEnd();
-	glPointSize(2.0f);
+	glPointSize(3.0f);
 }
 
 void displayGizmo()
 {
-    /*if(cercanos)
-        graficar_circulo(circleX, circleY);*/
+    if(cercanos)
+        graficar_circulo(circleX, circleY);
 	pintar_lineas();
 	pintar_puntos();
 	if(cercanos)
@@ -87,10 +87,8 @@ void OnMouseClick(int button, int state, int x, int y)
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
     //convertir x,y
     Point p(x,y);
-    QuadTree *aux;
-    if(!qt->searchPoint(p,aux))
-    points.push_back(p);
     qt->insertPoint(p);
+    points.push_back(p);
 	//insertar un nuevo punto en el quadtree
   }
   if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
@@ -173,8 +171,7 @@ GLvoid window_key(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
 
 	//Inicializacion de la GLUT
-	unsigned t0,t1;
-	ifstream coordenadas("C:/Users/Alumno-G/Desktop/Coordenadas2.txt");
+	ifstream coordenadas("C:/Users/Luis/Desktop/QuadTree/bin/Debug/Coordenadas2.txt");
 	glutInit(&argc, argv);
 	/*string aux;
 	getline(coordenadas,aux);
@@ -190,6 +187,20 @@ int main(int argc, char** argv) {
 	coordenadas>>pointnum;
 	coordenada a,b;
 
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize(length, heigth); //tamaño de la ventana
+	glutInitWindowPosition(0, 0); //posicion de la ventana
+	glutCreateWindow("TP2 bis OpenGL : Bresenham"); //titulo de la ventana
+
+	init_GL(); //funcion de inicializacion de OpenGL
+
+	glutDisplayFunc(glPaint);
+	glutReshapeFunc(&window_redraw);
+	// Callback del teclado
+	glutKeyboardFunc(&window_key);
+	glutMouseFunc(&OnMouseClick);
+	glutPassiveMotionFunc(&OnMouseMotion);
+	glutIdleFunc(&idle);
     qt=new QuadTree(-length/2,length/2,-heigth/2,heigth/2,maxp);
     for(int i=0;i<pointnum;++i){
         coordenadas>>a>>b;
@@ -201,33 +212,7 @@ int main(int argc, char** argv) {
         qt->insertPoint(aux);
         points.push_back(aux);
     }
-    vector<Point> algo;
-    cout<<"QuadTree creado"<<endl;
-    t0=clock();
-	algo = qt->cercanos(75,-75,100);
-    t1=clock();
-    double time = (double(t1-t0)/CLOCKS_PER_SEC);
-    cout<<"Tiempo: "<<time<<endl;
-    cout<<algo.size()<<endl;
-
-
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize(length, heigth); //tamaño de la ventana
-	glutInitWindowPosition(0, 0); //posicion de la ventana
-	glutCreateWindow("QuadTree"); //titulo de la ventana
-
-	init_GL(); //funcion de inicializacion de OpenGL
-
-	glutDisplayFunc(glPaint);
-	glutReshapeFunc(&window_redraw);
-	// Callback del teclado
-	glutKeyboardFunc(&window_key);
-	glutMouseFunc(&OnMouseClick);
-	glutPassiveMotionFunc(&OnMouseMotion);
-	glutIdleFunc(&idle);
-
-
-    glutMainLoop(); //bucle de rendering
+	glutMainLoop(); //bucle de rendering
 	//no escribir nada abajo de mainloop
 	return 0;
 }
