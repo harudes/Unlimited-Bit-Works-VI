@@ -1,5 +1,14 @@
 # depslib dependency file v1.0
-1538243169 source:c:\users\alumno-g\desktop\quadtree\main.cpp
+1541175651 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
+	<iostream>
+	"QuadTree.h"
+
+1541175671 c:\users\luis\desktop\quadtree\include\quadtree.h
+	<vector>
+	<math.h>
+	<Point.h>
+
+1541175572 source:c:\users\luis\desktop\quadtree\main.cpp
 	<windows.h>
 	<iostream>
 	<math.h>
@@ -7,27 +16,24 @@
 	<stdlib.h>
 	<time.h>
 	<QuadTree.h>
+	<RTree.h>
 	<fstream>
-	<ctime>
 
-976692172 c:\users\alumno-g\downloads\quadtree\glut\include\gl\glut.h
+976692172 c:\users\luis\downloads\quadtree\glut\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
 
-1538241194 c:\users\alumno-g\desktop\quadtree\include\quadtree.h
+1541175670 c:\users\luis\desktop\quadtree\include\point.h
+
+1541175651 source:c:\users\luis\desktop\quadtree\src\point.cpp
+	"Point.h"
+
+1541177216 source:c:\users\luis\desktop\quadtree\src\rtree.cpp
+	"RTree.h"
+
+1541218663 c:\users\luis\desktop\quadtree\include\rtree.h
 	<vector>
 	<math.h>
 	<Point.h>
-
-1538243404 source:c:\users\alumno-g\desktop\quadtree\src\quadtree.cpp
-	"QuadTree.h"
-
-1538241264 c:\users\alumno-g\desktop\quadtree\include\point.h
-	<iostream>
-	<vector>
-	<math.h>
-
-1538241264 source:c:\users\alumno-g\desktop\quadtree\src\point.cpp
-	"Point.h"
 

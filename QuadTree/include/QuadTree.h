@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 bool findPoint(vector<Point> vec, Point p);
 
 float euclidean(float a, float b);
