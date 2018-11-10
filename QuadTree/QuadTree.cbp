@@ -46,11 +46,15 @@
 		</Linker>
 		<Unit filename="include/Point.h" />
 		<Unit filename="include/QuadTree.h" />
+		<Unit filename="include/Quadrilateral.h" />
 		<Unit filename="include/RTree.h" />
+		<Unit filename="include/Rectangle.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Point.cpp" />
 		<Unit filename="src/QuadTree.cpp" />
+		<Unit filename="src/Quadrilateral.cpp" />
 		<Unit filename="src/RTree.cpp" />
+		<Unit filename="src/Rectangle.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

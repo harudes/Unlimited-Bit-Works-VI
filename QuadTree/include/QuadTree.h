@@ -12,11 +12,6 @@ float euclidean(float a, float b);
 
 float euclidean(Point a, Point b);
 
-struct Line{
-    Line(Point a, Point b);
-    Point u,v;
-};
-
 class QuadTree{
 	coordenada minX,maxX,minY,maxY;
 	coordenada midX,midY;

@@ -18,7 +18,8 @@ using namespace std;
 
 
 //Crear quad tree
-QuadTree *qt;
+//QuadTree *qt;
+RTree* qt;
 vector<Line> lines;
 vector<Point> points;
 vector<Point> nearby;
@@ -45,17 +46,19 @@ void pintar_lineas(){
         glVertex2d(lines[i].v.getX(), lines[i].v.getY());
 	}
 	glEnd();
-	glLineWidth(2.0f);
+	glLineWidth(1.0f);
 }
 
 void pintar_puntos(){
     glBegin(GL_POINTS);
+    points=qt->getPoints();
+    //cout<<"Puntos:"<<points.size()<<endl;
 	for(unsigned int i=0;i<points.size();++i){
         glColor3d(0, 0.5f, 0.5f);
         glVertex2d(points[i].getX(), points[i].getY());
 	}
 	glEnd();
-	glPointSize(3.0f);
+	glPointSize(5.0f);
 }
 
 void resaltar_puntos(){
@@ -87,7 +90,8 @@ void OnMouseClick(int button, int state, int x, int y)
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
     //convertir x,y
     Point p(x,y);
-    qt->insertPoint(p);
+    //qt->insertPoint(p);
+    qt->Insert(x,y);
     points.push_back(p);
 	//insertar un nuevo punto en el quadtree
   }
@@ -103,7 +107,7 @@ void OnMouseMotion(int x, int y)
     x-=length/2;
     y-=heigth/2;
     y*=-1;
-    nearby=qt->cercanos(x,y,radio);
+    //nearby=qt->cercanos(x,y,radio);
     circleX=x;
     circleY=y;
      //opcional
@@ -139,13 +143,13 @@ void glPaint(void) {
 void init_GL(void) {
 	//Color del fondo de la escena
 	//glClearColor(0.180f, 0.193f, 0.227f, 0.0f); //(R, G, B, transparencia) en este caso un fondo negro
-    glClearColor(255, 255, 255, 0.0f);
+    glClearColor(0, 0, 0, 0.0f);
 	//modo projeccion
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 }
 
-//en el caso que la ventana cambie de tamaño
+//en el caso que la ventana cambie de tamaÃ±o
 GLvoid window_redraw(GLsizei width, GLsizei height) {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
@@ -171,7 +175,7 @@ GLvoid window_key(unsigned char key, int x, int y) {
 int main(int argc, char** argv) {
 
 	//Inicializacion de la GLUT
-	ifstream coordenadas("C:/Users/Luis/Desktop/QuadTree/bin/Debug/Coordenadas2.txt");
+	ifstream coordenadas("C:/Users/Luis/Desktop/Coordenadas.txt");
 	glutInit(&argc, argv);
 	/*string aux;
 	getline(coordenadas,aux);
@@ -188,7 +192,7 @@ int main(int argc, char** argv) {
 	coordenada a,b;
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize(length, heigth); //tamaño de la ventana
+	glutInitWindowSize(length, heigth); //tamaÃ±o de la ventana
 	glutInitWindowPosition(0, 0); //posicion de la ventana
 	glutCreateWindow("TP2 bis OpenGL : Bresenham"); //titulo de la ventana
 
@@ -201,17 +205,18 @@ int main(int argc, char** argv) {
 	glutMouseFunc(&OnMouseClick);
 	glutPassiveMotionFunc(&OnMouseMotion);
 	glutIdleFunc(&idle);
-    qt=new QuadTree(-length/2,length/2,-heigth/2,heigth/2,maxp);
-    for(int i=0;i<pointnum;++i){
+    //qt=new QuadTree(-length/2,length/2,-heigth/2,heigth/2,maxp);
+    qt= new RTree(4);
+    /*for(int i=0;i<pointnum;++i){
         coordenadas>>a>>b;
         //cout<<a<<" "<<b<<" "<<i<<endl;
         a*=heigth;
         b*=length;
         //cout<<a<<" "<<b<<endl;
         Point aux(b,a);
-        qt->insertPoint(aux);
+        qt->Insert(a,b);
         points.push_back(aux);
-    }
+    }*/
 	glutMainLoop(); //bucle de rendering
 	//no escribir nada abajo de mainloop
 	return 0;

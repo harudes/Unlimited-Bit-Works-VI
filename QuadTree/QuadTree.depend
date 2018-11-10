@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1541175651 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
+1541552616 source:c:\users\luis\desktop\quadtree\src\quadtree.cpp
 	<iostream>
 	"QuadTree.h"
 
-1541175671 c:\users\luis\desktop\quadtree\include\quadtree.h
+1541536380 c:\users\luis\desktop\quadtree\include\quadtree.h
 	<vector>
 	<math.h>
 	<Point.h>
 
-1541175572 source:c:\users\luis\desktop\quadtree\main.cpp
+1541661510 source:c:\users\luis\desktop\quadtree\main.cpp
 	<windows.h>
 	<iostream>
 	<math.h>
@@ -24,16 +24,31 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1541175670 c:\users\luis\desktop\quadtree\include\point.h
+1541555617 c:\users\luis\desktop\quadtree\include\point.h
+	<iostream>
 
-1541175651 source:c:\users\luis\desktop\quadtree\src\point.cpp
+1541555634 source:c:\users\luis\desktop\quadtree\src\point.cpp
 	"Point.h"
 
-1541177216 source:c:\users\luis\desktop\quadtree\src\rtree.cpp
+1541679511 source:c:\users\luis\desktop\quadtree\src\rtree.cpp
 	"RTree.h"
 
-1541218663 c:\users\luis\desktop\quadtree\include\rtree.h
+1541678197 c:\users\luis\desktop\quadtree\include\rtree.h
 	<vector>
 	<math.h>
+	<Point.h>
+	<Rectangle.h>
+	<queue>
+	<iostream>
+
+1541376347 source:c:\users\luis\desktop\quadtree\src\quadrilateral.cpp
+	"Quadrilateral.h"
+
+1541376443 c:\users\luis\desktop\quadtree\include\quadrilateral.h
+
+1541592048 source:c:\users\luis\desktop\quadtree\src\rectangle.cpp
+	"Rectangle.h"
+
+1541592048 c:\users\luis\desktop\quadtree\include\rectangle.h
 	<Point.h>
 

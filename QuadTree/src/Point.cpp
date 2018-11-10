@@ -1,8 +1,27 @@
 #include "Point.h"
 
+ostream& operator<<(ostream& os, Point p){
+	os << p.getX() << ',' << p.getY();
+	return os;
+}
+
+bool operator==(Point a, Point b){
+    return (a.x==b.x) && (a.y==b.y);
+}
+
+bool operator!=(Point a, Point b){
+    return (a.x!=b.x) || (a.y!=b.y);
+}
+
+Line::Line(Point a, Point b):u(a),v(b){}
+
 Point::Point(coordenada a, coordenada b):x(a),y(b){
 
 }//dtor
+
+Point::Point(){
+
+}
 
 coordenada Point::getX(){return x;}
 coordenada Point::getY(){return y;}
