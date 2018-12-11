@@ -1,6 +1,7 @@
 #ifndef POINT_H
 #define POINT_H
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -23,6 +24,10 @@ ostream& operator<<(ostream& os, Point p);
 bool operator==(Point a, Point b);
 
 bool operator!=(Point a, Point b);
+
+float euclidean(float a, float b);
+
+float euclidean(Point a, Point b);
 
 struct Line{
     Line(Point a, Point b);

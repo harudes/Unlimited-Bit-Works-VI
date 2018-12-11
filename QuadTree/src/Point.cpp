@@ -1,7 +1,7 @@
 #include "Point.h"
 
 ostream& operator<<(ostream& os, Point p){
-	os << p.getX() << ',' << p.getY();
+	os << "(" << p.getX() << ',' << p.getY()<<")";
 	return os;
 }
 
@@ -21,6 +21,14 @@ Point::Point(coordenada a, coordenada b):x(a),y(b){
 
 Point::Point(){
 
+}
+
+float euclidean(float a, float b) {
+	return sqrt(pow(a, 2) + pow(b, 2));
+}
+
+float euclidean(Point a, Point b) {
+	return sqrt((pow(a.getX() - b.getX(), 2)) + (pow(a.getY() - b.getY(), 2)));
 }
 
 coordenada Point::getX(){return x;}

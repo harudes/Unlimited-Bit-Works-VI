@@ -1,16 +1,13 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 #include <vector>
-#include <math.h>
 #include <Point.h>
 
 using namespace std;
 
 bool findPoint(vector<Point> vec, Point p);
 
-float euclidean(float a, float b);
 
-float euclidean(Point a, Point b);
 
 class QuadTree{
 	coordenada minX,maxX,minY,maxY;

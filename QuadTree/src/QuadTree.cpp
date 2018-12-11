@@ -9,14 +9,6 @@ bool findPoint(vector<Point> vec, Point p){
     return 0;
 }
 
-float euclidean(float a, float b) {
-	return sqrt(pow(a, 2) + pow(b, 2));
-}
-
-float euclidean(Point a, Point b) {
-	return sqrt((pow(a.getX() - b.getX(), 2)) + (pow(a.getY() - b.getY(), 2)));
-}
-
 QuadTree::QuadTree(coordenada xMin, coordenada xMax, coordenada yMin, coordenada yMax, int maxP):minX(xMin),maxX(xMax),minY(yMin),maxY(yMax),maxPoints(maxP){
     midX=(minX+maxX)/2;
     midY=(minY+maxY)/2;
@@ -113,28 +105,28 @@ bool QuadTree::onCircle(Point punto, float distancia){
 }
 
 vector<Point> QuadTree::cercanos(coordenada x, coordenada y, float radio) {
-		Point centro(x, y);
-		vector<Point> puntos;
-		if(onCircle(centro,radio)){
-            return getPoints();
-		}
-		else if (inRegion(centro, radio)) {
-			if (!regions[0]) {
-				for (size_t i = 0; i < points.size(); ++i) {
-					if (euclidean(points[i], centro) <= radio)
-						puntos.push_back(points[i]);
-				}
-			}
-			else {
-				vector<Point> aux;
-				for (int i = 0; i < 4; ++i) {
-					aux = regions[i]->cercanos(x, y, radio);
-					puntos.insert(puntos.end(),aux.begin(),aux.end());
-				}
-			}
-		}
-		return puntos;
-	}
+    Point centro(x, y);
+    vector<Point> puntos;
+    if(onCircle(centro,radio)){
+        return getPoints();
+    }
+    else if (inRegion(centro, radio)) {
+        if (!regions[0]) {
+            for (size_t i = 0; i < points.size(); ++i) {
+                if (euclidean(points[i], centro) <= radio)
+                    puntos.push_back(points[i]);
+            }
+        }
+        else {
+            vector<Point> aux;
+            for (int i = 0; i < 4; ++i) {
+                aux = regions[i]->cercanos(x, y, radio);
+                puntos.insert(puntos.end(),aux.begin(),aux.end());
+            }
+        }
+    }
+    return puntos;
+}
 
 vector<Line> QuadTree::getLines(){
     vector<Line> lines;

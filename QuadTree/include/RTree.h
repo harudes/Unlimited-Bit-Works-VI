@@ -17,17 +17,19 @@ class RTree
     vector<Point> points;
     vector<RTree*> branches;
     RTree* ChooseLeaf(Point E);
-    RTree* SplitLeaf();
-    RTree* SplitBranch();
+    void SplitLeaf(RTree *&NN);
+    void SplitBranch(RTree *&NN);
     void SplitRoot();
     void InsertPoint(Point E);
     void InsertBranch(RTree* N);
-    void Enlarge(Point E);
-    void Enlarge(rectangle R);
     void AdjustTree(RTree* NN, RTree* Root);
     void AdjustTree(Point E);
+    void Enlarge(Point E);
+    void Enlarge(RTree* N);
     void FindLeaf();
     void CondenseTree();
+    bool onCircle(Point punto, float distancia);
+	bool inRegion(Point punto, float distancia);
     void FillLeaf(RTree *N, vector<bool> &flags);
     void FillBranch(RTree *N, vector<bool> &flags);
     void PickSeeds(Point &E1, Point &E2, vector<bool> &flags);
@@ -38,11 +40,12 @@ public:
     RTree(int m);
     RTree(RTree* p, int m);
     ~RTree();
-    vector<Point> Search();
+    vector<Point> Search(Point centro, float radio);
     void Insert(coordenada a, coordenada b);
     void Delete();
     vector<Point> getPoints();
 	vector<Line> getLines();
+	void PrintTree();
 };
 
 #endif // RTREE_H
